@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: df976e287304
-Revises: a5cffa318ac2
-Create Date: 2025-08-17 18:25:40.531967
+Revision ID: 3328a04c1813
+Revises: 
+Create Date: 2025-10-21 17:16:05.965280
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'df976e287304'
-down_revision = 'a5cffa318ac2'
+revision = '3328a04c1813'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -29,6 +29,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('user',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
     )
     op.create_table('character',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -63,6 +71,7 @@ def downgrade():
     op.drop_table('favourite_characters')
     op.drop_table('favorite_planets')
     op.drop_table('character')
+    op.drop_table('user')
     op.drop_table('species')
     op.drop_table('planet')
     # ### end Alembic commands ###

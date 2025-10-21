@@ -81,7 +81,7 @@ class Character(db.Model):
 
     favorited_by_users: Mapped[List[User]] = relationship(
         "User",
-        secondary=favorite_planets_table,
+        secondary=favorite_characters_table, 
         back_populates="favorite_characters"
     )
 
